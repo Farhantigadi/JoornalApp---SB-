@@ -3,6 +3,8 @@ package com.EDigest.jounalAPP.Controller;
 import com.EDigest.jounalAPP.Entity.JournalEntity;
 import com.EDigest.jounalAPP.service.JournalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,45 +16,69 @@ public class JournalC {
     @Autowired
     JournalService service;
 
-    // In-memory database simulation
+
     public Map<Integer, JournalEntity> journalEntry = new HashMap<>();
 
     // Get all journals
     @GetMapping
-    public List<JournalEntity> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<JournalEntity>> getAll() {
+        try {
+            List<JournalEntity> list = service.getAll();
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Create a journal
     @PostMapping
-    public boolean post(@RequestBody JournalEntity journal) {
-        journal.setDate(LocalDateTime.now());
-         service.save(journal);
-         return true;
+    public ResponseEntity<?> post(@RequestBody JournalEntity journal) {
+        try {
+            journal.setDate(LocalDateTime.now());
+            JournalEntity savedJournal = service.save(journal);
+            return new ResponseEntity<>(savedJournal, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // Get journal by ID
     @GetMapping("id/{id}")
-    public Optional<JournalEntity> getJournalById(@PathVariable int id) {
-        return service.getById(id);
+    public ResponseEntity<?> getJournalById(@PathVariable int id) {
+        Optional<JournalEntity> journal = service.getById(id);
+        if (journal.isPresent()){
+            return new ResponseEntity<>(journal.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>( HttpStatus.NOT_FOUND);
     }
 
     // Delete journal by ID
     @DeleteMapping("id/{id}")
-    public Boolean deleteById(@PathVariable int id) {
-        service.DeleteById(id);
-        return true;
+    public ResponseEntity<?> deleteById(@PathVariable int id) {
+     try {
+         service.DeleteById(id);
+         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+     }
+     catch (Exception e){
+
+         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+     }
     }
     @DeleteMapping
-   public Boolean Delete(){
+   public ResponseEntity<?> Delete(){
         service.deleteAll();
-        return true;
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
    }
 
     // Update journal by ID
     @PutMapping("id/{id}")
-    public JournalEntity changeById(@PathVariable int id, @RequestBody JournalEntity updatedJournal) {
-         service.save(updatedJournal);
-         return updatedJournal;
+    public ResponseEntity<?> changeById(@PathVariable int id, @RequestBody JournalEntity updatedJournal) {
+     try {
+         JournalEntity entity = service.save(updatedJournal);
+         return new ResponseEntity<>(entity,HttpStatus.ACCEPTED);
+     } catch (Exception e){
+         return new ResponseEntity<>(HttpStatus.CONFLICT);
+     }
     }
 }

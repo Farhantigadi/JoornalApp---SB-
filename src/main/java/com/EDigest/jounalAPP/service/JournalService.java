@@ -13,8 +13,9 @@ public class JournalService {
 
     @Autowired
     JournalRepo repo;
-    public void save(JournalEntity entity){
+    public JournalEntity save(JournalEntity entity){
       repo.save(entity);
+        return entity;
     }
     public List<JournalEntity> getAll(){
         return repo.findAll();
