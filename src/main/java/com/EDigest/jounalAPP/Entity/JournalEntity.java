@@ -1,7 +1,28 @@
 package com.EDigest.jounalAPP.Entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.time.LocalDateTime;
+
+@Entity
 public class JournalEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private LocalDateTime date;
+    private String journalTitle;
+    private String journalDescription;
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
 
     public int getId() {
         return id;
@@ -19,14 +40,12 @@ public class JournalEntity {
         this.journalTitle = journalTitle;
     }
 
-    public String getJornalDescription() {
-        return jornalDescription;
+    public String getJournalDescription() {
+        return journalDescription;
     }
 
-    public void setJornalDescription(String jornalDescription) {
-        this.jornalDescription = jornalDescription;
+    public void setJournalDescription(String journalDescription) {
+        this.journalDescription = journalDescription;
     }
 
-    private String journalTitle;
-    private String jornalDescription;
 }
