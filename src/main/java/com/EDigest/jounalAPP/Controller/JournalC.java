@@ -17,7 +17,7 @@ public class JournalC {
     JournalService service;
 
 
-    public Map<Integer, JournalEntity> journalEntry = new HashMap<>();
+
 
     // Get all journals
     @GetMapping
@@ -42,6 +42,7 @@ public class JournalC {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     // Get journal by ID
     @GetMapping("id/{id}")
