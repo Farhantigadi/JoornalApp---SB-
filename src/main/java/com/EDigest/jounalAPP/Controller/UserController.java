@@ -19,13 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService service;
+     @Autowired
+    PasswordEncoder passwordEncoder;
 
-
-
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
-    }
 
 
 
@@ -71,22 +67,31 @@ public class UserController {
 
     @PutMapping("/update")
     public ResponseEntity<?> updateLoggedInUser(@RequestBody User user) {
-        // Get username of currently authenticated user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        // Find the actual user by username
         User existingUser = service.findUserByUsername(username);
 
         if (existingUser == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
-        // Update fields
-        existingUser.setUsername(user.getUsername());
-        existingUser.setPassword(user.getPassword());
+        // Safely update password only if it is new and not already encoded
+        String newPassword = user.getPassword();
+        if (newPassword != null && !newPassword.isBlank()) {
+            if (!newPassword.startsWith("$2a$") && !newPassword.startsWith("$2b$")) {
+                existingUser.setPassword(passwordEncoder.encode(newPassword));
+            } else {
+                existingUser.setPassword(newPassword);
+            }
+        }
+
+        // Optional: update username
+        if (user.getUsername() != null) {
+            existingUser.setUsername(user.getUsername());
+        }
 
         User updatedUser = service.updateUser(existingUser.getId(), existingUser);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
 
 }
