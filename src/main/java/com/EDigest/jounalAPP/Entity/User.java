@@ -18,10 +18,12 @@ public class User {
     private String username;
 
     @NonNull
-    private String Password;
+    private String password;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JournalEntity> journals;
+
+    List<String> roles;
 
     /*
     @NonNull: Logbook's annotation (ensures these fields aren't null at runtime).

@@ -1,12 +1,14 @@
 package com.EDigest.jounalAPP.service;
 
 import com.EDigest.jounalAPP.Entity.JournalEntity;
+import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.Repo.JournalRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JournalService {
@@ -26,6 +28,13 @@ public class JournalService {
     public void DeleteById(int id){
         repo.deleteById(id);
     }
+    public List<JournalEntity> getByUser(User user) {
+        return repo.findAll()
+                .stream()
+                .filter(journal -> journal.getUser().getId() == user.getId())
+                .collect(Collectors.toList());
+    }
+
 
     /*
     Why Optional<JournalEntity> is returned by findById(id)?
