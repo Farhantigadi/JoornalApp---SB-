@@ -14,10 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -26,13 +26,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                        .requestMatchers("/user/**","/journal/**").authenticated()
-
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // Must match EXACTLY what's in DB
+                        .requestMatchers("/user/**", "/journal/**").authenticated()
                 )
-                .formLogin(withDefaults())
                 .httpBasic(withDefaults())
+                .formLogin(withDefaults())
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
@@ -46,5 +44,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }

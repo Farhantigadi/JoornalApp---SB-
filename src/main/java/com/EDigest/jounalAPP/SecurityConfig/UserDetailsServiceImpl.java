@@ -14,26 +14,25 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-
     @Autowired
     private UserRepo repo;
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = repo.findByUsername(username);
         if (user == null) throw new UsernameNotFoundException("User not found");
 
+        // Keep ROLE_ prefix exactly as stored in DB
         List<SimpleGrantedAuthority> authorities = user.getRoles()
                 .stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(SimpleGrantedAuthority::new) // No string manipulation!
                 .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), authorities);
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
     }
-
 }

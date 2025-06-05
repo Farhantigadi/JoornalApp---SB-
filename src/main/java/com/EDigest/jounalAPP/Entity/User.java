@@ -23,6 +23,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JournalEntity> journals;
 
+    @Convert(converter = StringListConverter.class)
     List<String> roles;
 
     /*
