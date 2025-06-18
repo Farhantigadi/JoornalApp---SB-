@@ -5,6 +5,7 @@ package com.EDigest.jounalAPP.service;
 import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.Repo.UserRepo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
+
 public class UserService {
 
     @Autowired
@@ -28,11 +30,18 @@ public class UserService {
         }
         return repo.save(user);
     }
+
     public User saveAdmin(User user) {
         // Encode password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(List.of("ROLE_USER","ROLE_ADMIN"));
-        return repo.save(user);
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(List.of("ROLE_USER","ROLE_ADMIN"));
+            return repo.save(user);
+        }
+        catch (Exception e){
+            System.err.println("Error saving admin user: " + e.getMessage());
+            return null;
+        }
     }
 
     public Optional<User> getUserById(int id) {

@@ -1,0 +1,4 @@
+2025-06-18 19:12:42.912 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-18 19:12:42.938 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-18 19:12:42.949 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 10 ms
+2025-06-18 19:12:44.362 [http-nio-8080-exec-1] INFO  c.E.j.Controller.AdminController - Get started

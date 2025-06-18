@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: JournalApp
+  profiles:
+    active: dev
+
+logging:
+  level:
+    com.EDigest.journalAPP: DEBUG       #for particular package with the annotation
+
+
+#logging:
+#  level:
+#    root: ERROR   #for root level
+#
+
+  logging:
+    level:
+      com.EDigest.journalAPP.service: DEBUG
+

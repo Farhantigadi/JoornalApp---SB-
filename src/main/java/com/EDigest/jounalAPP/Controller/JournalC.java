@@ -4,6 +4,7 @@ import com.EDigest.jounalAPP.Entity.JournalEntity;
 import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.service.JournalService;
 import com.EDigest.jounalAPP.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class JournalC {
     @GetMapping
     public ResponseEntity<List<JournalEntity>> getAll() {
         try {
+
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = userService.findUserByUsername(username);
             List<JournalEntity> journals = service.getByUser(user);

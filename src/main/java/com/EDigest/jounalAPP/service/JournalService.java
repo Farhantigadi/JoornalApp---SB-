@@ -3,6 +3,7 @@ package com.EDigest.jounalAPP.service;
 import com.EDigest.jounalAPP.Entity.JournalEntity;
 import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.Repo.JournalRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class JournalService {
 
     @Autowired
@@ -22,11 +24,21 @@ public class JournalService {
     public List<JournalEntity> getAll(){
         return repo.findAll();
     }
+
+
     public  void deleteAll(){
-        repo.deleteAll();
+      try {
+          repo.deleteAll();
+      } catch (Exception e){
+          log.info("No users found");
+      }
     }
     public void DeleteById(int id){
-        repo.deleteById(id);
+        try {
+            repo.deleteById(id);
+        } catch (Exception e){
+            log.warn("No id found");
+        }
     }
     public List<JournalEntity> getByUser(User user) {
         return repo.findAll()

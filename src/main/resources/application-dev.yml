@@ -6,13 +6,14 @@ spring:
 
   # Database Configuration (MySQL)
   datasource:
-    url: jdbc:mysql://localhost:3306/JournalApp?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/JournalApp
     username: root
     password: 8858
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
+
 
 
 
