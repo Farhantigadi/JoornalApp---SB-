@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,5 +60,19 @@ Instead of returning null (which can cause NullPointerException), it returns an 
     public Optional<JournalEntity> getById(int id){
         return repo.findById(id);
 
+    }
+}
+
+class prac{
+    public static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.add(40);
+        Collections.reverse(list);
+        System.out.println(list);
+//        Collections.sort(list,Collections.reverseOrder());
+//        System.out.println(list);
     }
 }

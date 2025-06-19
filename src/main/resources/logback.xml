@@ -30,8 +30,8 @@
             </timeBasedFileNamingAndTriggeringPolicy>
 
             <!-- Retention: keep last 60 minutes of logs -->
-            <maxHistory>60</maxHistory>
-            <totalSizeCap>1GB</totalSizeCap>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>10MB</totalSizeCap>
         </rollingPolicy>
 
         <encoder>
@@ -48,3 +48,123 @@
     <!-- Your package-specific logging -->
     <logger name="com.EDigest.journalAPP" level="DEBUG"/>
 </configuration>
+
+
+<!--
+Configuration Root
+
+<configuration scan="true">
+Starts the Logback configuration.
+
+scan="true" makes Logback auto-reload the file if changed (within Spring Boot).
+
+🟦 2. Properties (Variables)
+
+<property name="LOG_DIR" value="logs"/>
+<property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+LOG_DIR: Location where log files will be saved.
+
+LOG_PATTERN: Format of log lines (time, thread, level, logger name, message).
+
+🟦 3. Console Appender
+
+<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>${LOG_PATTERN}</pattern>
+    </encoder>
+</appender>
+This sends logs to your console (useful during development).
+
+Uses the pattern from LOG_PATTERN.
+
+🟦 4. Rolling File Appender for Specific Class
+
+<appender name="AUTH_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIR}/auth.log</file>
+This appender writes to auth.log in the logs/ folder.
+
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_DIR}/auth.%d{yyyy-MM-dd_HH-mm}.%i.log</fileNamePattern>
+A new file every minute.
+
+If log size > 10MB in a minute, a new file is created with .1, .2, etc.
+
+
+        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>10MB</maxFileSize>
+        </timeBasedFileNamingAndTriggeringPolicy>
+        <maxHistory>60</maxHistory>
+Files rotate by size and time.
+
+maxHistory: Keeps last 60 files (oldest files deleted automatically).
+
+    <encoder>
+        <pattern>${LOG_PATTERN}</pattern>
+    </encoder>
+</appender>
+🟦 5. Logger for One Specific Class
+
+<logger name="com.EDigest.journalAPP.service.AuthService" level="DEBUG" additivity="false">
+    <appender-ref ref="AUTH_FILE"/>
+</logger>
+This targets one class: AuthService.
+
+additivity="false": Prevents logs from going to the root logger (so only auth.log is used).
+
+🟦 6. Root Logger
+
+<root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+</root>
+Captures everything else (like classes that don't have their own logger).
+
+Sends to console.
+
+🔄 Configure for:
+1️⃣ Only One Class
+Use the class’s full name in <logger name="...">, like:
+
+
+<logger name="com.example.MyClass" level="DEBUG" additivity="false">
+    <appender-ref ref="MYCLASS_FILE"/>
+</logger>
+2️⃣ Two or More Classes
+Use two loggers and two appenders:
+
+<appender name="CLASS1_FILE">...</appender>
+<appender name="CLASS2_FILE">...</appender>
+
+<logger name="com.example.ClassOne" level="DEBUG" additivity="false">
+    <appender-ref ref="CLASS1_FILE"/>
+</logger>
+
+<logger name="com.example.ClassTwo" level="DEBUG" additivity="false">
+    <appender-ref ref="CLASS2_FILE"/>
+</logger>
+3️⃣ Entire Package]
+<logger name="com.example.service" level="DEBUG" additivity="false">
+    <appender-ref ref="SERVICE_FILE"/>
+</logger>
+This logs everything inside the service package to SERVICE_FILE.
+
+4️⃣ All Classes Globally
+Use only the root logger:
+
+
+<root level="DEBUG">
+    <appender-ref ref="APPLICATION_FILE"/>
+</root>
+💡 TIPS TO USE IT CORRECTLY
+Tip #	Description
+1	Use additivity="false" to isolate logs to only that class or appender.
+2	Always match package/class names exactly — Java is case-sensitive!
+3	Don't forget to use LoggerFactory.getLogger(YourClass.class) in the class.
+4	Limit maxHistory and totalSizeCap to prevent log bloating.
+5	For multi-module apps, use different log files per module/package.
+6	Use %i.log with %d{...} in fileNamePattern to allow both size and time rotation.
+7	Avoid excessive logging (like DEBUG) in production — use INFO or WARN instead.
+8	Keep your log folder configurable via Spring profiles (e.g., ${LOG_DIR:logs}).
+
+
+-->
