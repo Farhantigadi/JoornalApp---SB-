@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -17,11 +19,13 @@ public class AdminController {
     @Autowired
     UserService service;
 
-    @GetMapping("allUser")
-    public ResponseEntity<?> getAllUsers() {
+    @GetMapping("greet")
+    public ResponseEntity<?> greet() {
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
             log.info("Get started");
-            return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
+            return new ResponseEntity<>(authentication.getName(),HttpStatus.OK);
         }
         catch (Exception e){
             log.error("Unauthorized user{}");
@@ -31,6 +35,21 @@ public class AdminController {
 
     @PostMapping("create-admin-user")
     public ResponseEntity<?> createAdmin(@RequestBody User user){
+
         return new ResponseEntity<>(service.saveAdmin(user),HttpStatus.CREATED);
+    }
+    @GetMapping("allUsers")
+    public ResponseEntity<?> getAllUsers() {
+        try {
+
+            log.info("Get started");
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
+
+        }
+        catch (Exception e){
+            log.error("Unauthorized user{}");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

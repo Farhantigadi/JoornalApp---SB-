@@ -1,4 +1,16 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: farhantigadi123@gmail.com
+    password: wyrw rnly jhue uxlr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   application:
     name: JournalApp
   profiles:
@@ -14,7 +26,11 @@ logging:
 #    root: ERROR   #for root level
 #
 
-  logging:
-    level:
-      com.EDigest.journalAPP.service: DEBUG
+
+
+
+
+
+
+
 
