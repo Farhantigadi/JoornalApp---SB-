@@ -1,20 +1,35 @@
 
+
+
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: farhantigadi123@gmail.com
+    password: wyrw rnly jhue uxlr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   application:
     name: JournalApp
 
-
-  # Database Configuration (MySQL)
   datasource:
     url: jdbc:mysql://localhost:3306/JournalApp
     username: root
     password: 8858
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
-
-
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 
 
