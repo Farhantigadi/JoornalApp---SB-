@@ -17,7 +17,9 @@ import java.io.IOException;
  import com.EDigest.jounalAPP.util.jwtUtil;
 
 @Component
-public class JwtFilter  extends OncePerRequestFilter{
+public class JwtFilter  extends OncePerRequestFilter{  //OncePerRequestFilter: Ensures this filter runs only once per HTTP request.
+
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -26,7 +28,7 @@ public class JwtFilter  extends OncePerRequestFilter{
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        String authorizationHeader = request.getHeader("Authorization");
+        String authorizationHeader = request.getHeader("Authorization");  // Reads the Authorization header from the incoming request.
         String username = null;
         String jwt = null;
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {

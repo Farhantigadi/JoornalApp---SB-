@@ -5,6 +5,7 @@ package com.EDigest.jounalAPP.Controller;
 import com.EDigest.jounalAPP.Entity.User;
 
 import com.EDigest.jounalAPP.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,8 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User APIs")
+
 public class UserController {
 
     @Autowired

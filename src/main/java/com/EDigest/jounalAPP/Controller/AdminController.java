@@ -2,6 +2,8 @@ package com.EDigest.jounalAPP.Controller;
 
 import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("admin")
+@Tag(name = "Admin APIs" , description = "Admin related APIs")
 public class AdminController {
     @Autowired
     UserService service;
@@ -34,6 +37,7 @@ public class AdminController {
     }
 
     @PostMapping("create-admin-user")
+    @Operation(summary = "Create a new admin and it must be done through admin")
     public ResponseEntity<?> createAdmin(@RequestBody User user){
 
         return new ResponseEntity<>(service.saveAdmin(user),HttpStatus.CREATED);

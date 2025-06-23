@@ -4,6 +4,7 @@ import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.SecurityConfig.UserDetailsServiceImpl;
 import com.EDigest.jounalAPP.service.UserService;
 import com.EDigest.jounalAPP.util.jwtUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -19,6 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("public")
 @Slf4j
+@Tag(name = "Public APIs")
+
 public class PublicController {
 
     @Autowired

@@ -46,14 +46,14 @@ public class jwtUtil {
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
-                .claims(claims)
-                .subject(subject)
+                .claims(claims) //// Additional data (empty for now)
+                .subject(subject)// username
                 .header().empty().add("typ","JWT")
                 .and()
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 50)) // 5 minutes expiration time
-                .signWith(getSigningKey())
-                .compact();
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 50)) // 50 minutes expiration time
+                .signWith(getSigningKey()) // secret key
+                .compact(); // returns the final string
     }
 
     public Boolean validateToken(String token) {

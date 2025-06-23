@@ -4,6 +4,7 @@ import com.EDigest.jounalAPP.Entity.JournalEntity;
 import com.EDigest.jounalAPP.Entity.User;
 import com.EDigest.jounalAPP.service.JournalService;
 import com.EDigest.jounalAPP.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 @RestController
 @RequestMapping("journal")
+@Tag(name = "Journal APIs")
 public class JournalC {
 
     @Autowired
