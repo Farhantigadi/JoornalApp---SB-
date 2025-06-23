@@ -3,6 +3,7 @@ package com.EDigest.jounalAPP.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -10,7 +11,9 @@ import java.util.*;
 
 @Component
 public class jwtUtil {
-    private String SECRET_KEY = "TaK+HaV^uvCHEFsEVfypW#7g9^k*Z8$V";
+
+    @Value("${jwt.secret-key}")
+    private String SECRET_KEY;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
