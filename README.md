@@ -73,13 +73,11 @@ This application allows authenticated users to create, view, update, and delete 
 
 ---
 
-## 📚 API Documentation
-
-Interactive Swagger docs available at:  
-
+## 📚Access Swagger
+http://localhost:8080/swagger-ui.html
 ---
  
----
+
 
 ## 🚀 Getting Started
 
