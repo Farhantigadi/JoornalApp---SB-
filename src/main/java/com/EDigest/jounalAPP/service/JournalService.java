@@ -24,7 +24,7 @@ public class JournalService {
         return entity;
     }
     public List<JournalEntity> getAll(){
-        return repo.findAll();
+         return repo.findAll();
     }
 
 
